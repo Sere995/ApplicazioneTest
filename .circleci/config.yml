@@ -17,9 +17,9 @@ jobs:
     stages:
       - publish
 
-    publish-image:
+    publish:
       stage: publish
-      script:
+      before-script:
         # Install CA certs, openssl to https downloads, python for gcloud sdk
         - apk add --update make ca-certificates openssl python
         - update-ca-certificates
@@ -39,8 +39,12 @@ jobs:
         - google-cloud-sdk/bin/gcloud docker -- push gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:latest
         - google-cloud-sdk/bin/gcloud docker -- push gcr.io/$GCP_PROJECT_ID/$IMAGE_NAME:$(echo $CI_COMMIT_SHA | cut -c1-8)
       # Only run builds for these refs
+      script:
+        - docker build -t $IMAGE_NAME .
+        - docker tag $IMAGE_NAME "us.gcr.io/$GCLOUD_PROJECT_ID/$IMAGE_NAME"
+        - docker push "us.gcr.io/$GCLOUD_PROJECT_ID/$IMAGE_NAME:latest"
       only:
-        - master    
+        - master
     steps:
       - checkout
       - restore_cache:
@@ -66,7 +70,7 @@ jobs:
       - run:
           name: Authorize gcloud and set config defaults
           command: |
-               gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+               google-cloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
                gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
       - run:
           name: Test with Firebase Test Lab
