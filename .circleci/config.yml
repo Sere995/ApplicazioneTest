@@ -19,10 +19,10 @@ jobs:
       - checkout
       - run:
           name: docer pull
-          command: pull google/cloud-sdk:latest
+          command: docker pull google/cloud-sdk:latest
       - run:
           name: docker run
-          command: run -ti  google/cloud-sdk:latest gcloud version
+          command: docker run -ti  google/cloud-sdk:latest gcloud version
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       #      - run:
