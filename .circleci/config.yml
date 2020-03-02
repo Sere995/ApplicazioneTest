@@ -34,13 +34,6 @@ jobs:
           command: |
               ./gradlew :app:assembleDebug
               ./gradlew :app:assembleDebugAndroidTest
-      - setup_remote_docker
-      - run:
-          name: docer pull
-          command: docker pull google/cloud-sdk:latest
-      - run:
-          name: docker run
-          command: docker run -ti  google/cloud-sdk:latest gcloud version
       - run:
           name: Store Google Service Account
           with: # Set the secret as an input
