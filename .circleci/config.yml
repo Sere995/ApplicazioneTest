@@ -17,9 +17,6 @@ jobs:
 
     steps:
       - checkout
-      - step:
-        name: Hello world action
-        env: GCLOUD_SERVICE_KEY=${{secrets.$GCLOUD_SERVICE_KEY}}
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       #      - run:
@@ -39,6 +36,8 @@ jobs:
               ./gradlew :app:assembleDebugAndroidTest
       - run:
           name: Store Google Service Account
+          with: # Set the secret as an input
+            super_secret: ${{ GCLOUD_SERVICE_KEY }}
           command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
       - run:
           name: Authorize gcloud and set config defaults
