@@ -37,8 +37,8 @@ jobs:
       - run:
           name: Store Google Service Account
           with: # Set the secret as an input
-            super_secret: ${{ secrets.GCLOUD_SERVICE_KEY }}
-          command: echo ${{secrets.GCLOUD_SERVICE_KEY }} > ${HOME}/gcloud-service-key.json
+            super_secret: $GCLOUD_SERVICE_KEY=${{ secrets.GCLOUD_SERVICE_KEY }}
+          command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
       - run:
           name: Authorize gcloud and set config defaults
           command: |
