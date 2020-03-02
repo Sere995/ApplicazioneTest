@@ -17,8 +17,8 @@ jobs:
 
     steps:
       - checkout
-      - docker pull google/cloud-sdk:latest
-      - docker run -ti  google/cloud-sdk:latest gcloud version
+      - docker: pull google/cloud-sdk:latest
+      - docker: run -ti  google/cloud-sdk:latest gcloud version
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       #      - run:
