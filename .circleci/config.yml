@@ -17,9 +17,9 @@ jobs:
 
     steps:
       - checkout
-      - name: Hello world action
-        env: # Or as an environment variable
-          GCLOUD_SERVICE_KEY=${{secrets.$GCLOUD_SERVICE_KEY}}
+      -step:
+        name: Hello world action
+        env: GCLOUD_SERVICE_KEY=${{secrets.$GCLOUD_SERVICE_KEY}}
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       #      - run:
