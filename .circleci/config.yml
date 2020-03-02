@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Hello world action
           env: # Or as an environment variable
-            super_secret: ${{ secrets.$GCLOUD_SERVICE_KEY}}
+            GCLOUD_SERVICE_KEY=${{ secrets.$GCLOUD_SERVICE_KEY}}
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       #      - run:
