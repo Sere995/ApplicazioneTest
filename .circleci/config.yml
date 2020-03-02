@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - checkout
-      -step:
+      - step:
         name: Hello world action
         env: GCLOUD_SERVICE_KEY=${{secrets.$GCLOUD_SERVICE_KEY}}
       - restore_cache:
