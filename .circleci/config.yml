@@ -5,6 +5,11 @@ jobs:
     working_directory: ~/code
     docker:
       - image: circleci/android:api-28-alpha
+
+    services:
+      - docker:dind
+    variables:
+      DOCKER_DRIVER: overlay
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
@@ -26,9 +31,6 @@ jobs:
           command: |
               ./gradlew :app:assembleDebug
               ./gradlew :app:assembleDebugAndroidTest
-      - run:
-          name: docker
-          command: docker pull gcr.io/google.com/cloudsdktool/cloud-sdk:latest
       - run:
           name: Store Google Service Account
           command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
