@@ -34,6 +34,7 @@ jobs:
           command: |
               ./gradlew :app:assembleDebug
               ./gradlew :app:assembleDebugAndroidTest
+      - setup_remote_docker
       - run:
           name: docer pull
           command: docker pull google/cloud-sdk:latest
