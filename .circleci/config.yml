@@ -54,7 +54,7 @@ jobs:
           name: Install gsutil dependency and copy test results data
           command: |
               sudo pip install -U crcmod
-              sudo gsutil -m cp -r -U `sudo gsutil ls gs://applicazionetest-884b8/ApplicazioneTest | tail -1` ${CIRCLE_ARTIFACTS}/ | true
+              sudo gsutil -m cp -r -U `sudo gsutil ls gs://applicazionetest-884b8 | tail -1` ${CIRCLE_ARTIFACTS}/ | true
       - run:
           name: Run Tests
           command: ./gradlew lint test
