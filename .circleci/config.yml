@@ -46,7 +46,8 @@ jobs:
           name: Test with Firebase Test Lab
           command: >
               sudo gcloud firebase test android run \
-                --type robo \
+                --type instrumentation \
                 --app ${HOME}/code/app/build/outputs/apk/debug/app-debug.apk \
+                --test ${HOME}/code/app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
                 --device model=Pixel2,version=26,locale=en,orientation=portrait  \
                 --timeout 90s
