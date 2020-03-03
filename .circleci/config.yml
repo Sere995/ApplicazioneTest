@@ -48,7 +48,7 @@ jobs:
               sudo gcloud firebase test android run \
                 --type robo \
                 --app app-debug.apk \
-                --device model=Pixel_2_API_R,version=21,locale=en,orientation=portrait  \
+                --device model=Pixel2,version=26,locale=en,orientation=portrait  \
                 --timeout 90s \
                 --results-bucket cloud-test-${GOOGLE_PROJECT_ID}
       - run:
