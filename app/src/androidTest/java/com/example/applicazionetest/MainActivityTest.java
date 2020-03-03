@@ -27,7 +27,10 @@ public class MainActivityTest {
         View view = mActivity.findViewById(R.id.activity_main_title);
         assertNotNull(view);
     }
-
+    @Test
+    public void funAddTes() {
+        assertEquals(10, 4+5);
+    }
     @After
     public void tearDown() throws Exception {
         mActivity=null;
