@@ -49,8 +49,7 @@ jobs:
                 --type robo \
                 --app app-debug.apk \
                 --device model=Pixel2,version=26,locale=en,orientation=portrait  \
-                --timeout 90s \
-                --results-bucket cloud-test-${GOOGLE_PROJECT_ID}
+                --timeout 90s 
       - run:
           name: Install gsutil dependency and copy test results data
           command: |
