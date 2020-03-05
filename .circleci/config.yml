@@ -45,7 +45,7 @@ jobs:
       - run:
           name: Running Robo Test
           command: >
-              gcloud firebase test android run \
+              sudo gcloud firebase test android run \
                  --type robo \
                  --app ${HOME}/code/app/build/outputs/apk/debug/app-debug.apk \
                  --device model=Pixel2,version=26,locale=en,orientation=portrait  \
