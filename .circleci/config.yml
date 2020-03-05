@@ -51,7 +51,7 @@ jobs:
                  --device model=Pixel2,version=26,locale=en,orientation=portrait  \
                  --timeout 90s
       - run:
-          name: Test with Firebase Test Lab
+          name: Running Instrumentation Test
           command: >
               sudo gcloud firebase test android run \
                 --type instrumentation \
