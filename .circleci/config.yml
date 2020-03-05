@@ -44,7 +44,7 @@ jobs:
               sudo gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
       - run:
           name: Running Robo Test
-          command:
+          command: >
               gcloud firebase test android run \
                  --type robo \
                  --app ${HOME}/code/app/build/outputs/apk/debug/app-debug.apk \
