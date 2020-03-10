@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button button_next = findViewById(R.id.button_next_activity);
         button_next.setOnClickListener(new View.OnClickListener() {
-            
+
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SecondaryActivity.class);
