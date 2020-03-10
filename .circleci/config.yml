@@ -11,12 +11,12 @@ jobs:
 
     steps:
       - checkout
-          - restore_cache:
+      - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "build.gradle" }}
               - v1-dependencies-
 
-              - run: gradle dependencies
+      - run: gradle dependencies
 
       - save_cache:
           paths:
