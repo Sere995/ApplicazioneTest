@@ -24,9 +24,16 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: run Lint
+          name: run lint
           command: ./gradlew lint
-      - run:
-          name: run Unit Test
-          command: ./gradlew tedt
 
+      - run:
+          name: Creo cartella per risultati Lint
+          command : |
+               mkdir -p risultatiLintTest
+               cp -R app/build/reports/lint-results.html risultatiLintTest
+               cp -R app/build/reports/lint-results.xml risultatiLintTest
+
+       - store_artifacts:
+          path: risultatiLintTest
+          destination: risultatiLintTest
