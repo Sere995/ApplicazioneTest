@@ -26,3 +26,7 @@ jobs:
       - run:
           name: run Lint
           command: ./gradlew lint
+      - run:
+          name: run Unit Test
+          command: ./gradlew tedt
+
