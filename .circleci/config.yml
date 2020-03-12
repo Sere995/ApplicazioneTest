@@ -34,6 +34,6 @@ jobs:
                cp -R app/build/reports/lint-results.html risultatiLintTest
                cp -R app/build/reports/lint-results.xml risultatiLintTest
 
-       - store_artifacts:
+      - store_artifacts:
           path: risultatiLintTest
           destination: risultatiLintTest
