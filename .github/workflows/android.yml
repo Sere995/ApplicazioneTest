@@ -167,66 +167,66 @@ jobs:
       run: adb shell monkey -p $packagename -v 100
 
  
-#  FunesDroidTest:
-#    runs-on: macos
-#    steps:
-#
-#      - name: checkout
-#        uses: actions/checkout@v2
-#
-#      - name: Installo Python
-#        uses: actions/setup-python@v1
-#        with:
-#          python-version: '3.8' # Version range or exact version of a Python version to use, using SemVer's version range syntax
-#          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
-#
-#      - name: Install SKD
-#        run: |
-#          echo "Installing new cmdline-tools."
-#          mkdir ${ANDROID_HOME}/cmdline-tools
-#          curl -fo commandlinetools.zip ${CMDLINE_TOOLS_URL}
-#          unzip -q commandlinetools.zip -d ${ANDROID_HOME}/cmdline-tools
-#          rm -f commandlinetools.zip
-#          export PATH=${ANDROID_HOME}/cmdline-tools/tools:${ANDROID_HOME}/cmdline-tools/tools/bin:${ANDROID_HOME}/platform-tools:$PATH
-#          echo "Installing latest build tools, platform tools, and platform."
-#          sdkmanager --install 'build-tools;'${BUILD_TOOLS_VERSION} platform-tools 'platforms;android-'${apiLevel} > /dev/null
-#          echo "Installing latest emulator"
-#          sdkmanager --install emulator > /dev/null
-#          echo "Installing system images"
-#          sdkmanager --install 'system-images;android-'${apiLevel}';'${target}';'${arch} > /dev/null
-#
-#      - name: Create AVD
-#        run: |
-#          export PATH=${ANDROID_HOME}/tools/bin:$PATH
-#          echo "Creating AVD without custom profile."
-#          echo no | avdmanager create avd --force -n ${nomeemulatore} --abi ${target}/${arch} --package 'system-images;android-'${apiLevel}';'${target}';'${arch}
-#
-#      - name: Launch AVD
-#        run: |
-#          echo "Launch AVD."
-#          ${ANDROID_HOME}/emulator/emulator -avd test -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim &
-#
-#      - name: Wait emulator
-#        run: |
-#          chmod u+x .github/scripts/waitdevice.sh
-#          .github/scripts/waitdevice.sh
-#
-#      - name: Autorizzo Gradle
-#        run: chmod u+x ./gradlew
-#
-#      - name: Eseguo FunesDroid Test
-#        run: |
-#          echo "Costruisco apk."
-#          ./gradlew assembleDebug
-#          chmod u+x .github/scripts/funesdroid.sh
-#          .github/scripts/funesdroid.sh
-#
-#      - name: Risultati FunesDroid
-#        uses: actions/upload-artifact@v1
-#        with:
-#          name: Risultati FunesDroid
-#          path: FunesDroid-master/Results
-#
+  FunesDroidTest:
+    runs-on: macos
+    steps:
+
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Installo Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: '3.8' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+
+      - name: Install SKD
+        run: |
+          echo "Installing new cmdline-tools."
+          mkdir ${ANDROID_HOME}/cmdline-tools
+          curl -fo commandlinetools.zip ${CMDLINE_TOOLS_URL}
+          unzip -q commandlinetools.zip -d ${ANDROID_HOME}/cmdline-tools
+          rm -f commandlinetools.zip
+          export PATH=${ANDROID_HOME}/cmdline-tools/tools:${ANDROID_HOME}/cmdline-tools/tools/bin:${ANDROID_HOME}/platform-tools:$PATH
+          echo "Installing latest build tools, platform tools, and platform."
+          sdkmanager --install 'build-tools;'${BUILD_TOOLS_VERSION} platform-tools 'platforms;android-'${apiLevel} > /dev/null
+          echo "Installing latest emulator"
+          sdkmanager --install emulator > /dev/null
+          echo "Installing system images"
+          sdkmanager --install 'system-images;android-'${apiLevel}';'${target}';'${arch} > /dev/null
+
+      - name: Create AVD
+        run: |
+          export PATH=${ANDROID_HOME}/tools/bin:$PATH
+          echo "Creating AVD without custom profile."
+          echo no | avdmanager create avd --force -n ${nomeemulatore} --abi ${target}/${arch} --package 'system-images;android-'${apiLevel}';'${target}';'${arch}
+
+      - name: Launch AVD
+        run: |
+          echo "Launch AVD."
+          ${ANDROID_HOME}/emulator/emulator -avd test -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim &
+
+      - name: Wait emulator
+        run: |
+          chmod u+x .github/scripts/waitdevice.sh
+          .github/scripts/waitdevice.sh
+
+      - name: Autorizzo Gradle
+        run: chmod u+x ./gradlew
+
+      - name: Eseguo FunesDroid Test
+        run: |
+          echo "Costruisco apk."
+          ./gradlew assembleDebug
+          chmod u+x .github/scripts/funesdroid.sh
+          .github/scripts/funesdroid.sh
+
+      - name: Risultati FunesDroid
+        uses: actions/upload-artifact@v1
+        with:
+          name: Risultati FunesDroid
+          path: FunesDroid-master/Results
+
   FunesDroidTestInvioRichiesta:
     runs-on: macos
     steps:
