@@ -165,7 +165,6 @@ jobs:
     - name: Eseguo Monkey Test
       run: adb shell monkey -p $packagename -v 100
 
- 
   FunesDroidTest:
     runs-on: macos
     steps:
