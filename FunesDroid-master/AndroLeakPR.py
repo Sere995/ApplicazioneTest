@@ -32,17 +32,17 @@ DEVICE="emulator-5554"
 #Function that reboot the emulator.
 def rebootEmulator():
     #os.system("adb -s "+DEVICE+" -e reboot")
-    os.system("emulator -avd "+DEVICE+" -wipe-data")
+    os.system("/Users/runner/Library/Android/sdk/emulator/emulator -avd "+DEVICE+" -wipe-data")
     time.sleep(5)
     waitDeviceHasBooted()
 
 #Function that wait that the Emulator has booted.
 def waitDeviceHasBooted():
     maxiter=1000; count=0;
-    result=os.popen("adb -s "+DEVICE+" shell getprop sys.boot_completed").read()
+    result=os.popen("/Users/runner/Library/Android/sdk/platform-tools/adb -s "+DEVICE+" shell getprop sys.boot_completed").read()
     while("1" not in result):
-        print("adb -s "+DEVICE+" shell getprop sys.boot_completed")
-        result=os.popen("adb -s "+DEVICE+" shell getprop sys.boot_completed").read()
+        print("/Users/runner/Library/Android/sdk/platform-tools/adb -s "+DEVICE+" shell getprop sys.boot_completed")
+        result=os.popen("/Users/runner/Library/Android/sdk/platform-tools/adb -s "+DEVICE+" shell getprop sys.boot_completed").read()
         print("Waiting the Emulator")
         time.sleep(2)
         count+=1;
@@ -50,12 +50,13 @@ def waitDeviceHasBooted():
             print("ERROR: The emulator is offline.")
             raise SystemExit(0);
 
+#Aspetto, eventualmente, che il device finisca il boot
+waitDeviceHasBooted()
+os.system('echo Device Avviato e pronto!')
+
 #Se la directory è vuota lancio un errore.
 if os.listdir("InputAPKs") == []: 
     raise ValueError('InputAPKs\ is empty. You must put some apk files in InputAPKs\.')
-
-#Aspetto, eventualmente, che il device finisca il boot
-waitDeviceHasBooted()
 
 #Recupero il numero di rotazioni e campionamenti dall'input
 li = sys.argv
@@ -115,7 +116,7 @@ if(stimulus_type=="stai" or stimulus_type=="3"):
 device_time = time.strftime("%d/%m/%Y "+"%I:%M:%S")
 device_time_dformat = time.strftime("%m%d%H%M%Y.%S")
 print("Setting Device's date and time to: "+device_time)
-cmd = "adb -s "+DEVICE+" shell \"su 0 toybox date "+device_time_dformat+"\""
+cmd = "/Users/runner/Library/Android/sdk/platform-tools/adb -s "+DEVICE+" shell \"su 0 toybox date "+device_time_dformat+"\""
 os.system(cmd)
 
 StartingExperimentsTime = time.strftime("%d/%m/%Y "+"%I:%M:%S")
@@ -142,7 +143,7 @@ EndingExperimentsTime = time.strftime("%d/%m/%Y "+"%I:%M:%S")
 print("Ending experiments: " + EndingExperimentsTime)
 
 #Riabilita accellerometro su dispositivo
-os.system("adb -s "+DEVICE+" shell content insert --uri content://settings/system --bind name:s:accelerometer_rotation --bind value:i:1")
+os.system("/Users/runner/Library/Android/sdk/platform-tools/adb -s "+DEVICE+" shell content insert --uri content://settings/system --bind name:s:accelerometer_rotation --bind value:i:1")
 
 #Creo il file results.txt
 #Se non esiste la directory di risultato la creo
