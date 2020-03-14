@@ -63,7 +63,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: Install SKD
+      - name: Install SDK
         run: |
           echo "Installing new cmdline-tools."
           mkdir ${ANDROID_HOME}/cmdline-tools
@@ -120,7 +120,7 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
 
-    - name: Install SKD
+    - name: Install SDK
       run: |
         echo "Installing new cmdline-tools."
         mkdir ${ANDROID_HOME}/cmdline-tools
@@ -178,7 +178,7 @@ jobs:
           python-version: '3.8' # Version range or exact version of a Python version to use, using SemVer's version range syntax
           architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
 
-      - name: Install SKD
+      - name: Install SDK
         run: |
           echo "Installing new cmdline-tools."
           mkdir ${ANDROID_HOME}/cmdline-tools
@@ -193,32 +193,25 @@ jobs:
           echo "Installing system images"
           sdkmanager --install 'system-images;android-'${apiLevel}';'${target}';'${arch} > /dev/null
 
-      - name: Create AVD
-        run: |
-          export PATH=${ANDROID_HOME}/tools/bin:$PATH
-          echo "Creating AVD without custom profile."
-          echo no | avdmanager create avd --force -n ${nomeemulatore} --abi ${target}/${arch} --package 'system-images;android-'${apiLevel}';'${target}';'${arch}
-
-      - name: Launch AVD
-        run: |
-          echo "Launch AVD."
-          ${ANDROID_HOME}/emulator/emulator -avd test -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim &
-
-      - name: Wait emulator
-        run: |
-          chmod u+x .github/scripts/waitdevice.sh
-          .github/scripts/waitdevice.sh
-
       - name: Autorizzo Gradle
         run: chmod u+x ./gradlew
+    
+      - name: Creo APK
+        run: ./gradlew assembleDebug
 
+      - name: Operazioni preliminari FunesDroid Test
+        run: |
+          mkdir -p FunesDroid-master/InputAPKs
+          mkdir -p FunesDroid-master/Results
+          mv app/build/outputs/apk/debug/app-debug.apk FunesDroid-master/InputAPKs
+          
+      #python launchexp.py -les [doc|bf|stai] -nevent [n] -wtime [w] -api [a]
       - name: Eseguo FunesDroid Test
         run: |
-          echo "Costruisco apk."
-          ./gradlew assembleDebug
-          chmod u+x .github/scripts/funesdroid.sh
-          .github/scripts/funesdroid.sh
-
+          echo "Eseguo FunesDroid Test."
+          cd FunesDroid-master/
+          python launchexp.py --les 'doc' --nevent 1 --wtime 1 --apiversion ${apiLevel}
+          
       - name: Risultati FunesDroid
         uses: actions/upload-artifact@v1
         with:
